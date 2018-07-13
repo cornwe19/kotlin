@@ -45,9 +45,10 @@ abstract class AbstractKotlinTarget (
 internal fun KotlinTarget.disambiguateName(simpleName: String) =
     lowerCamelCaseName(targetName, simpleName)
 
-open class KotlinAndroidTarget(project: Project) : AbstractKotlinTarget(project) {
-    override val targetName: String
-        get() = "android"
+open class KotlinAndroidTarget(
+    override val targetName: String,
+    project: Project
+) : AbstractKotlinTarget(project) {
 
     override var disambiguationClassifier: String? = null
         internal set
