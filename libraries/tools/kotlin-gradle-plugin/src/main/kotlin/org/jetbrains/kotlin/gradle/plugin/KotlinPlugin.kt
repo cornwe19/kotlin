@@ -501,7 +501,7 @@ internal open class KotlinAndroidPlugin(
 ) : Plugin<Project> {
 
     override fun apply(project: Project) {
-        val androidTarget = KotlinAndroidTarget(project)
+        val androidTarget = KotlinAndroidTarget("", project)
 
         applyToTarget(
             project, androidTarget, tasksProvider,
