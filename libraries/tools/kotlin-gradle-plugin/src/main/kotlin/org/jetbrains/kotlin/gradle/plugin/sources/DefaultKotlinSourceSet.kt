@@ -10,8 +10,8 @@ import org.gradle.api.Project
 import org.gradle.api.file.SourceDirectorySet
 import org.gradle.api.internal.file.DefaultSourceDirectorySet
 import org.gradle.api.internal.file.FileResolver
+import org.gradle.util.ConfigureUtil
 import org.jetbrains.kotlin.gradle.plugin.KotlinDependencyHandler
-import org.jetbrains.kotlin.gradle.plugin.executeClosure
 import org.jetbrains.kotlin.gradle.plugin.mpp.DefaultKotlinDependencyHandler
 import org.jetbrains.kotlin.gradle.plugin.source.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.plugin.source.KotlinSourceSetWithResources
@@ -42,7 +42,7 @@ class DefaultKotlinSourceSet(
 
     override val resources: SourceDirectorySet = createDefaultSourceDirectorySet(displayName + " resources", fileResolver)
 
-    override fun kotlin(configureClosure: Closure<Any?>): SourceDirectorySet = kotlin.apply { executeClosure(configureClosure) }
+    override fun kotlin(configureClosure: Closure<Any?>): SourceDirectorySet = kotlin.apply { ConfigureUtil.configure(configureClosure, this) }
 
     override fun getName(): String = displayName
 
@@ -50,7 +50,7 @@ class DefaultKotlinSourceSet(
         DefaultKotlinDependencyHandler(this, project).run(configure)
 
     override fun dependencies(configureClosure: Closure<Any?>) =
-        dependencies f@{ this@f.executeClosure(configureClosure) }
+        dependencies f@{ ConfigureUtil.configure(configureClosure, this@f) }
 
     override fun toString(): String = "source set $name"
 }
